@@ -76,16 +76,14 @@ node_modules/
 ```
 
 Already-tracked files are unaffected by `.gitignore`; stop tracking one with `git rm --cached`
-(see `snapshotting.md`).
+(see [snapshotting](snapshotting.md)).
 
-## Edge cases / anti-patterns
+## Operational cautions
 
 - **Don't** commit secrets to `.git/config` or files; ignoring a file does not untrack it if already
   committed.
 - **Don't** assume the default branch is `main` — it depends on `init.defaultBranch`.
 - **Don't** use `--global` inside a repo expecting per-repo effect; that is `--local`.
-
-## Do / Don't
 
 - **Do** set `user.name`/`user.email` (globally or per-repo) before committing.
 - **Do** prefer `--depth`/`--single-branch` for large repos you only need shallowly.
@@ -93,4 +91,4 @@ Already-tracked files are unaffected by `.gitignore`; stop tracking one with `gi
 
 ## Related
 
-`snapshotting.md` · `remotes-and-sync.md` · `stash-and-worktrees.md` · `refs-and-revisions.md`
+[snapshotting](snapshotting.md) · [remotes-and-sync](remotes-and-sync.md) · [stash-and-worktrees](stash-and-worktrees.md) · [refs-and-revisions](refs-and-revisions.md)

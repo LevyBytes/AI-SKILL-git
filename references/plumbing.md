@@ -48,7 +48,8 @@ git ls-tree -r --name-only HEAD
 ## Refs and traversal
 
 - `git update-ref <ref> <new-oid> [<old-oid>]` updates a ref safely (optionally verifying the old
-  value); `-d` deletes; `-m <reason>` writes a reflog message; `--stdin` batches atomically.
+  value); `-d` deletes; `-m <reason>` records a reason in applicable reflogs.
+  `--stdin` groups updates into a transaction; concurrent readers may still see a subset.
 - `git for-each-ref` iterates refs by pattern with `--sort=<key>` and `--format=<format>` fields like
   `%(refname:short)`, `%(objectname)`, `%(upstream)`, `%(committerdate)`.
 - `git rev-list` is the commit-graph walker behind `git log`: `--count`, `--all`, `--no-merges`,
@@ -72,14 +73,12 @@ git check-ignore -v build/output.o
 # .gitignore:5:*.o    build/output.o
 ```
 
-## Edge cases / anti-patterns
+## Operational cautions
 
 - **Don't** parse porcelain output in scripts when a plumbing command (or `--porcelain` /
   `for-each-ref --format`) gives stable, machine-readable output.
 - **Don't** hand-edit refs files — use `git update-ref` so the reflog and locking stay correct.
 - **Don't** assume `--is-ancestor` prints output — it communicates only through its exit code.
-
-## Do / Don't
 
 - **Do** use `git rev-parse` / `git for-each-ref` / `git rev-list` as scripting building blocks.
 - **Do** use `git cat-file -p` to read any object by name.
@@ -87,5 +86,5 @@ git check-ignore -v build/output.o
 
 ## Related
 
-`refs-and-revisions.md` · `inspection-and-comparison.md` · `recovery-and-maintenance.md` ·
-`setup-and-config.md`
+[refs-and-revisions](refs-and-revisions.md) · [inspection-and-comparison](inspection-and-comparison.md) · [recovery-and-maintenance](recovery-and-maintenance.md) ·
+[setup-and-config](setup-and-config.md)

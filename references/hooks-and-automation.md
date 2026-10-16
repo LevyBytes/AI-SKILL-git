@@ -34,13 +34,14 @@ receiving repository.
 
 ### Exit status
 
-A **non-zero exit from a `pre-*` hook aborts** the operation (`pre-commit`, `commit-msg`,
-`pre-rebase`, `pre-push`, `pre-receive`, `update`, …). `post-*` hooks are notifications — their exit
-code does not change the result. Some commit hooks are skippable with `--no-verify`.
+Exit behavior is hook-specific. `pre-commit`, `prepare-commit-msg`, `commit-msg`, `pre-rebase`,
+`pre-push`, `pre-receive` and `update` can reject their operation. A post hook cannot undo a
+completed change, but `post-checkout` can set the command's exit status. `--no-verify` skips
+`pre-commit` and `commit-msg`, not `prepare-commit-msg`.
 
 ```bash
-# .git/hooks/pre-commit  (chmod +x)
 #!/bin/sh
+# .git/hooks/pre-commit  (chmod +x)
 npm run lint || exit 1   # non-zero blocks the commit
 ```
 
@@ -69,7 +70,7 @@ Key built-in attributes:
 
 Query effective attributes with `git check-attr`.
 
-## Edge cases / anti-patterns
+## Operational cautions
 
 - **Don't** assume hooks are shared — `.git/hooks/` is not committed; distribute via `core.hooksPath`
   or a tracked directory.
@@ -78,12 +79,10 @@ Query effective attributes with `git check-attr`.
 - **Don't** rely on `--no-verify` for policy — server-side `pre-receive`/`update` hooks can't be
   bypassed by clients.
 
-## Do / Don't
-
 - **Do** enforce critical policy in server-side hooks, not just client-side.
 - **Do** set `* text=auto` (plus explicit `eol`) to keep line endings sane cross-platform.
 - **Don't** put secrets in hook scripts or attributes files.
 
 ## Related
 
-`snapshotting.md` · `setup-and-config.md` · `recovery-and-maintenance.md` · `remotes-and-sync.md`
+[snapshotting](snapshotting.md) · [setup-and-config](setup-and-config.md) · [recovery-and-maintenance](recovery-and-maintenance.md) · [remotes-and-sync](remotes-and-sync.md)

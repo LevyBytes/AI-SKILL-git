@@ -34,7 +34,7 @@ git switch -c feature HEAD~3
 
 `git checkout` still does both jobs — `git checkout -b <new-branch>` (create + switch) and the
 file-restore form `git checkout [<tree-ish>] -- <pathspec>` (now `git restore`, see
-`snapshotting.md`). Use `--` to separate pathspecs from branch names.
+[snapshotting](snapshotting.md)). Use `--` to separate pathspecs from branch names.
 
 ## Merging
 
@@ -43,8 +43,9 @@ file-restore form `git checkout [<tree-ish>] -- <pathspec>` (now `git restore`, 
 - **Fast-forward:** if `HEAD` is an ancestor of the target, the pointer simply advances — no merge
   commit. Force a merge commit with `--no-ff`; require fast-forward with `--ff-only`.
 - `--squash` stages the combined result without committing or moving `HEAD`.
-- `--no-commit` pauses before the commit; `-m <msg>` sets the message; `-s <strategy>` /
-  `-X <strategy-option>` (e.g. `ours`, `theirs`) tune strategy.
+- `--no-commit` pauses before a merge commit, not a fast-forward; pair with `--no-ff`.
+- `-m <msg>` sets the message; `-s <strategy>` chooses the merge strategy.
+  `-X ours` / `-X theirs` set conflict preferences for strategies supporting those options.
 
 ```
 git merge --no-ff feature
@@ -66,7 +67,8 @@ their version
 
 `merge.conflictStyle` can switch to `diff3` / `zdiff3`, which add a `|||||||` base section. Resolve by
 editing, `git add`-ing the file, then `git merge --continue` (or `git commit`). `git merge --abort`
-restores the pre-merge state; `git merge --quit` leaves the index/working tree as-is.
+tries to restore the pre-merge state but may not recover pre-existing uncommitted edits;
+`git merge --quit` leaves the index/working tree as-is.
 
 ## Tagging
 
@@ -82,14 +84,12 @@ git tag -a v1.0 -m "Release 1.0"
 git push origin v1.0
 ```
 
-## Edge cases / anti-patterns
+## Operational cautions
 
 - **Don't** assume `git merge` always makes a merge commit — fast-forward leaves no record unless
   `--no-ff`.
 - **Don't** forget tags need an explicit `git push origin <tagname>` (or `--tags`).
 - **Don't** leave a detached HEAD's new commits unreferenced — create a branch before switching away.
-
-## Do / Don't
 
 - **Do** use `git switch` / `git switch -c` for branch work and reserve `git checkout` for legacy use.
 - **Do** delete merged branches with `-d` (safe) rather than `-D`.
@@ -97,4 +97,4 @@ git push origin v1.0
 
 ## Related
 
-`snapshotting.md` · `rewriting-history.md` · `remotes-and-sync.md` · `refs-and-revisions.md`
+[snapshotting](snapshotting.md) · [rewriting-history](rewriting-history.md) · [remotes-and-sync](remotes-and-sync.md) · [refs-and-revisions](refs-and-revisions.md)

@@ -14,7 +14,8 @@ repo, checking out a subset of a large repo, or packaging a tree/repo for transf
 - `git stash` (or `push`) shelves changes; `-u` / `--include-untracked` also stashes untracked files;
   `-k` / `--keep-index` keeps staged changes in the index; `-p` selects hunks.
 - `git stash list`, `git stash show [<stash>]` inspect entries (addressed as `stash@{<n>}`).
-- `git stash pop` applies **and** removes the top entry; `git stash apply` applies but keeps it;
+- `git stash pop` applies and removes the entry only on success; a conflict keeps it.
+  `git stash apply` applies but keeps the entry;
   `git stash drop` / `clear` remove entries; `git stash branch <name>` restores onto a new branch.
 
 ```
@@ -39,8 +40,8 @@ git worktree add -b hotfix ../hotfix main
 
 ## Submodules
 
-`git submodule` embeds another repository at a path, pinned to a specific commit, recorded in the
-tracked `.gitmodules` file (`submodule.<name>.url` / `.path` / `.branch`):
+`git submodule` embeds another repository at a path. The superproject's **gitlink** records
+the pinned commit; `.gitmodules` records configuration such as URL, path and optional branch:
 
 - `git submodule add <repository> [<path>]` adds one.
 - `git submodule update --init --recursive` clones/populates them (or clone with
@@ -70,7 +71,7 @@ git sparse-checkout set src/ docs/
 ## Exporting: archive and bundle
 
 - `git archive --format=zip -o out.zip <tree-ish>` exports a tree as tar/zip, honoring
-  `export-ignore` / `export-subst` (see `hooks-and-automation.md`); `--prefix=<prefix>/` nests paths.
+  `export-ignore` / `export-subst` (see [hooks-and-automation](hooks-and-automation.md)); `--prefix=<prefix>/` nests paths.
 - `git bundle create repo.bundle --all` packs refs+objects into one file for offline transfer;
   `git clone`/`git fetch` can read a bundle. Incremental: `git bundle create inc.bundle last..main`.
 
@@ -79,13 +80,11 @@ git archive --format=zip -o release.zip HEAD
 git bundle create repo.bundle --all
 ```
 
-## Edge cases / anti-patterns
+## Operational cautions
 
 - **Don't** treat stash as permanent storage — entries are easy to lose; commit important work.
 - **Don't** expect to check out the same branch in two worktrees — Git refuses without `--force`.
 - **Don't** forget submodules are pinned to a commit — update and commit the new pointer deliberately.
-
-## Do / Don't
 
 - **Do** use `git stash -u` when untracked files matter; `pop` vs `apply` deliberately.
 - **Do** use a worktree (not a stash) when you need to build/test another branch concurrently.
@@ -93,4 +92,4 @@ git bundle create repo.bundle --all
 
 ## Related
 
-`snapshotting.md` · `branching-and-merging.md` · `setup-and-config.md` · `hooks-and-automation.md`
+[snapshotting](snapshotting.md) · [branching-and-merging](branching-and-merging.md) · [setup-and-config](setup-and-config.md) · [hooks-and-automation](hooks-and-automation.md)

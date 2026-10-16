@@ -27,7 +27,8 @@ Key config: `remote.<name>.url`, `remote.<name>.fetch`.
 ## Fetching
 
 `git fetch [<repository> [<refspec>]]` downloads objects and updates remote-tracking branches (e.g.
-`refs/remotes/origin/main`) **without** touching your branch or working tree. Useful flags: `--all`,
+`refs/remotes/origin/main`) without merging into your working tree. Refs updated depend on
+refspecs; tags and other local refs can also be destinations. Useful flags: `--all`,
 `-p` / `--prune` (drop deleted remote refs), `-t` / `--tags`, `--depth=<depth>` / `--unshallow`,
 `--dry-run`. Results are also recorded in `FETCH_HEAD`.
 
@@ -43,9 +44,9 @@ negative (exclude) refspec.
 
 ## Pulling
 
-`git pull` is `git fetch` **plus** integration of the upstream branch. By default it merges; with
-`--rebase` (or `pull.rebase=true`) it rebases your commits on top instead. `--ff-only` refuses to
-create a merge when histories diverge; `--autostash` shelves local changes around the operation.
+`git pull` fetches and integrates the selected upstream. Choose `--ff-only` to reject divergence,
+`--rebase` to replay local commits, or `--no-rebase` to merge. Defaults depend on Git version and
+configuration; do not assume an implicit merge. `--autostash` temporarily shelves local changes.
 
 ```
 git pull --rebase origin main
@@ -58,8 +59,10 @@ git pull --rebase origin main
 
 - `-u` / `--set-upstream` records the upstream so later `git push`/`git pull` need no arguments.
 - `--tags` / `--follow-tags` publish tags (not sent by default); `--delete` removes a remote ref.
-- `--force-with-lease` safely overwrites only if the remote still matches what you last saw — prefer
-  it over `--force`. `--atomic` makes a multi-ref push all-or-nothing.
+- `--force-with-lease` checks an expected remote ref value; an implicit lease uses local tracking
+  refs and can be weakened by background fetches. Use `--force-with-lease=<refname>:<expect>`
+  with a verified expected commit when protecting a specific update. `--atomic` makes a multi-ref
+  push all-or-nothing when supported by the server.
 
 ```
 git push -u origin main
@@ -69,14 +72,12 @@ git push origin --delete stale-branch
 `push.default` (default `simple`) controls behavior with no refspec; deletion syntax is
 `git push origin :branch` or `--delete`.
 
-## Edge cases / anti-patterns
+## Operational cautions
 
-- **Don't** assume `git fetch` changes your working tree — it only updates remote-tracking refs; use
+- **Don't** assume `git fetch` integrates changes — inspect its refspecs and tag/pruning effects; use
   `git pull` or a manual merge/rebase to integrate.
-- **Don't** use `--force`; reach for `--force-with-lease` to avoid clobbering others' work.
+- **Do** verify the expected remote commit before an authorized force-with-lease update.
 - **Don't** expect tags to travel with a normal push — pass `--tags` / `--follow-tags`.
-
-## Do / Don't
 
 - **Do** `git fetch` + review before integrating on shared branches.
 - **Do** set upstream with `-u` on the first push of a branch.
@@ -84,4 +85,4 @@ git push origin --delete stale-branch
 
 ## Related
 
-`branching-and-merging.md` · `setup-and-config.md` · `refs-and-revisions.md` · `rewriting-history.md`
+[branching-and-merging](branching-and-merging.md) · [setup-and-config](setup-and-config.md) · [refs-and-revisions](refs-and-revisions.md) · [rewriting-history](rewriting-history.md)

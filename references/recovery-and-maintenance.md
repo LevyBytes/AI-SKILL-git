@@ -13,13 +13,14 @@ pointed. Find the prior position and restore it.
 
 ```
 git reflog                 # e.g. abc123 HEAD@{2}: commit: WIP
-git reset --hard HEAD@{2}  # or: git branch recovered abc123
+git branch recovered 'HEAD@{2}'  # verify the reflog entry before using it
 ```
 
 `HEAD@{<n>}` and `<branch>@{<n>}` address reflog entries; `HEAD@{<date>}` addresses by time. A bad
 reset also leaves the previous tip in `ORIG_HEAD`. Reflog entries live in `.git/logs/` and expire per
 `gc.reflogExpire` (default 90 days) and `gc.reflogExpireUnreachable` (default 30 days), so recover
-promptly. See `rewriting-history.md`.
+promptly. This can recover retained commits, not guarantee recovery of discarded uncommitted
+content. See [rewriting-history](rewriting-history.md).
 
 ## Inspecting integrity with fsck
 
@@ -54,21 +55,20 @@ git gc --prune=now
 
 `git prune` removes unpacked unreachable objects from the database — but it is normally invoked **by
 `git gc`**, not directly. Keep it distinct from the unrelated `git remote prune` /
-`git fetch --prune`, which only drop stale remote-tracking refs (see `remotes-and-sync.md`).
+`git fetch --prune`, which prune destination refs according to refspecs; tag refspecs can also
+prune local tags (see [remotes-and-sync](remotes-and-sync.md)).
 
 ```
 git prune -n   # dry run; prefer running git gc instead
 ```
 
-## Edge cases / anti-patterns
+## Operational cautions
 
 - **Don't** panic after a bad `reset --hard` or rebase — check `git reflog` and `ORIG_HEAD` first.
 - **Don't** run `git gc --prune=now` while another process may be writing objects — it can drop
   objects still being referenced.
 - **Don't** confuse `git prune` (object database) with `git remote prune` / `git fetch --prune`
-  (remote-tracking refs).
-
-## Do / Don't
+  (reference pruning governed by refspecs).
 
 - **Do** recover lost commits with `git branch <name> <sha-from-reflog>` before they expire.
 - **Do** let `gc.auto` handle routine maintenance.
@@ -76,4 +76,4 @@ git prune -n   # dry run; prefer running git gc instead
 
 ## Related
 
-`rewriting-history.md` · `inspection-and-comparison.md` · `plumbing.md` · `remotes-and-sync.md`
+[rewriting-history](rewriting-history.md) · [inspection-and-comparison](inspection-and-comparison.md) · [plumbing](plumbing.md) · [remotes-and-sync](remotes-and-sync.md)

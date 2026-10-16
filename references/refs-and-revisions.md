@@ -31,7 +31,7 @@ Special pseudo-refs include `ORIG_HEAD` (pre-reset/rebase/merge), `MERGE_HEAD`, 
 
 ```
 git show HEAD~2          # two commits back
-git diff @{u}...HEAD     # since the merge base with upstream
+git diff '@{u}...HEAD'     # since the merge base with upstream
 ```
 
 ## Naming ranges
@@ -52,13 +52,13 @@ git log main..feature   # commits on feature not yet on main
 ## Refspecs
 
 Fetch/push map refs with `[+]<src>:<dst>`; a leading `+` allows non-fast-forward updates. The default
-clone fetch refspec is `+refs/heads/*:refs/remotes/origin/*`. A `^<pattern>` excludes. See
-`remotes-and-sync.md`.
+clone fetch refspec is `+refs/heads/*:refs/remotes/origin/*`. For fetch, a `^<pattern>` excludes;
+push does not accept negative refspecs. See [remotes-and-sync](remotes-and-sync.md).
 
 ## Core vocabulary
 
-- **object** — immutable storage unit keyed by SHA-1: **blob** (file bytes), **tree** (directory),
-  **commit** (a history point), tag object.
+- **object** — immutable storage unit keyed by the repository's hash format (SHA-1 or SHA-256):
+  **blob** (file bytes), **tree** (directory), **commit** (a history point), tag object.
 - **commit-ish** / **tree-ish** — anything dereferenceable to a commit / tree.
 - **index** — the staging area (a stored working tree, also holding merge stages).
 - **working tree** — the checked-out files.
@@ -67,14 +67,12 @@ clone fetch refspec is `+refs/heads/*:refs/remotes/origin/*`. A `^<pattern>` exc
   `branch.<name>.merge`).
 - **reflog** — local history of where a ref has pointed.
 
-## Edge cases / anti-patterns
+## Operational cautions
 
 - **Don't** confuse `^` (parent) with `~` (ancestor): `A^2` is the second *parent*, `A~2` is two
   commits back on the first-parent line.
 - **Don't** read `A..B` as a file range — it's a commit range; use `--` to separate paths.
 - **Don't** assume `@{1}` and `@{-1}` mean the same — one is a reflog entry, the other a prior branch.
-
-## Do / Don't
 
 - **Do** use `@{u}` / `@{push}` to compare against upstream without typing remote names.
 - **Do** use `<rev>:<path>` to read a file from any commit.
@@ -82,4 +80,4 @@ clone fetch refspec is `+refs/heads/*:refs/remotes/origin/*`. A `^<pattern>` exc
 
 ## Related
 
-`inspection-and-comparison.md` · `remotes-and-sync.md` · `plumbing.md` · `branching-and-merging.md`
+[inspection-and-comparison](inspection-and-comparison.md) · [remotes-and-sync](remotes-and-sync.md) · [plumbing](plumbing.md) · [branching-and-merging](branching-and-merging.md)
