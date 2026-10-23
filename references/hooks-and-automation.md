@@ -57,9 +57,9 @@ Key built-in attributes:
 - `text`, `text=auto`, `-text`, and `eol=lf` / `eol=crlf` — line-ending normalization.
 - `diff` / `diff=<driver>`, `-diff` (treat as binary).
 - `merge` / `merge=<driver>` (built-in 3-way uses `<<<<<<<` `=======` `>>>>>>>` markers); `union`.
-- `filter=<driver>` — `clean` on check-in, `smudge` on checkout.
+- `filter=<driver>`: `clean` on check-in, `smudge` on checkout.
 - `export-ignore` / `export-subst` — control `git archive` output; `ident` — expand `$Id$`.
-- `binary` — macro for `-diff -merge -text`.
+- `binary`: macro for `-diff -merge -text`.
 
 ```
 *            text=auto

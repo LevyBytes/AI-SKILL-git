@@ -11,10 +11,10 @@ options, or deciding which files Git should ignore.
 `git init [<directory>]` makes a new repository, writing a `.git` directory (objects, `refs/heads`,
 `refs/tags`, templates). It is safe to re-run in an existing repository. Useful flags:
 
-- `--bare` — a repository with no working tree, for sharing/serving.
-- `-b <name>` / `--initial-branch=<name>` — name the first branch (otherwise the built-in default,
+- `--bare`: a repository with no working tree, for sharing/serving.
+- `-b <name>` / `--initial-branch=<name>`: name the first branch (otherwise the built-in default,
   currently `master`, or `init.defaultBranch`).
-- `--separate-git-dir=<git-dir>` — store the real repo elsewhere; the working tree gets a `.git` file.
+- `--separate-git-dir=<git-dir>`: store the real repo elsewhere; the working tree gets a `.git` file.
 - `--template=<template-directory>`, `--object-format=<format>` (`sha1`/`sha256`).
 
 ```
@@ -26,9 +26,9 @@ git init -b main my-project
 `git clone <repository> [<directory>]` copies a repository and sets up `refs/remotes/origin/`
 tracking. Common flags:
 
-- `-b <name>` / `--branch=<name>` — check out a specific branch (or tag).
-- `-o <name>` / `--origin=<name>` — name the remote something other than `origin`.
-- `--depth <depth>` — shallow clone with truncated history; `--single-branch` follows.
+- `-b <name>` / `--branch=<name>`: check out a specific branch (or tag).
+- `-o <name>` / `--origin=<name>`: name the remote something other than `origin`.
+- `--depth <depth>`: shallow clone with truncated history; `--single-branch` follows.
 - `--bare`, `--mirror` (implies `--bare`, maps all refs).
 - `--recurse-submodules[=<pathspec>]`, `--filter=<filter-spec>` (partial clone), `--sparse`.
 

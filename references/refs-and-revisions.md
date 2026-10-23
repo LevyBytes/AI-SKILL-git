@@ -57,15 +57,15 @@ push does not accept negative refspecs. See [remotes-and-sync](remotes-and-sync.
 
 ## Core vocabulary
 
-- **object** — immutable storage unit keyed by the repository's hash format (SHA-1 or SHA-256):
+- **object**: immutable storage unit keyed by the repository's hash format (SHA-1 or SHA-256):
   **blob** (file bytes), **tree** (directory), **commit** (a history point), tag object.
 - **commit-ish** / **tree-ish** — anything dereferenceable to a commit / tree.
-- **index** — the staging area (a stored working tree, also holding merge stages).
-- **working tree** — the checked-out files.
-- **fast-forward** — advancing a branch pointer to a descendant with no merge commit.
-- **upstream branch** — the branch your branch merges/rebases against (`branch.<name>.remote` +
+- **index**: the staging area (a stored working tree, also holding merge stages).
+- **working tree**: the checked-out files.
+- **fast-forward**: advancing a branch pointer to a descendant with no merge commit.
+- **upstream branch**: the branch your branch merges/rebases against (`branch.<name>.remote` +
   `branch.<name>.merge`).
-- **reflog** — local history of where a ref has pointed.
+- **reflog**: local history of where a ref has pointed.
 
 ## Operational cautions
 

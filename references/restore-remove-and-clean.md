@@ -22,7 +22,7 @@ git restore file.txt            # discard unstaged edits
 ## Removing and moving
 
 - `git rm <path>` deletes from **both** the working tree and index; `--cached` removes from the index
-  only (keeps the file on disk — use to stop tracking); `-r` recurses.
+  only (keeps the file on disk: use to stop tracking); `-r` recurses.
 - `git mv <source> <dest>` renames/moves and updates the index in one step.
 
 ```

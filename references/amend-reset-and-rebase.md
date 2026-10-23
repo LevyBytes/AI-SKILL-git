@@ -30,8 +30,8 @@ git commit --amend --no-edit
 `git reset [<mode>] <commit>` moves the current branch and conditionally touches the index and
 working tree:
 
-- `--soft` — move `HEAD` only; index and working tree **unchanged** (changes stay staged).
-- `--mixed` (default) — move `HEAD` and reset the index; working tree **unchanged** (changes become
+- `--soft`: move `HEAD` only; index and working tree **unchanged** (changes stay staged).
+- `--mixed` (default): move `HEAD` and reset the index; working tree **unchanged** (changes become
   unstaged).
 - `--hard` — move `HEAD`, index, **and** working tree (discards changes — destructive).
 

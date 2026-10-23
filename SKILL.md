@@ -1,8 +1,9 @@
 ---
 name: git
 description: "Use for Git commands, options, configuration, refspecs and revision ranges; staging, commits, branches, merges, rebase, cherry-pick, revert, reset, stash and tags; history, diffs, blame, bisect and grep; remotes, fetch/pull/push and tracking; hooks, attributes, submodules, worktrees and sparse checkout; reflog/fsck recovery, gc and plumbing. Also use for .gitignore, .gitattributes, .git/config, .git/hooks, Git errors and conflict markers, or choosing a version-control command without an explicit Git mention."
+license: Apache-2.0
 metadata:
-  last-updated: "2026-10-09"
+  last-updated: "2026-10-22"
 ---
 
 # Context Router
@@ -22,7 +23,7 @@ metadata:
 | Stash, Worktrees, and Submodules | Open when stashing work, managing worktrees or submodules, using sparse checkout, or creating archives and bundles. | [Stash, Worktrees, and Submodules](references/stash-and-worktrees.md) |
 | Plumbing | Open when scripting low-level object, ref, index, revision-list, or ignore-pattern operations. | [Plumbing](references/plumbing.md) |
 
-Open the [reference index](references/INDEX.md) or [topic catalog](references/topics.json) when selecting a subject. The [package overview](README.md) records installation context and licensing.
+Open the [reference index](references/INDEX.md) or [topic catalog](references/topics.json) when selecting a subject.
 
 # Language Translations
 
